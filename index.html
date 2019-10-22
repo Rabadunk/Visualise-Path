@@ -17,7 +17,27 @@
                 <input>
                 <input type="button" onclick="getPath()" value="Submit">
             </form>
+
+            <button onclick="nextMove()">next move</button>
+            <button onclick="autoComplete()">auto move</button>
+
+
+            <form id="form2">
+                <input>
+                <input type="button" onclick="getDirections()" value="Submit">
+            </form>
+            
+            <button onclick="nextDirection()">next move</button>
+            <button onclick="autoDirection()">auto move</button>
+
+            <form id="form3">
+                    <input>
+                    <input type="button" onclick="getDirections()" value="Submit">
+                </form>
+        
+                <button onclick="autoDirection()">get map</button>
         </div>
+
 
 
         <script src="maze.js"></script>
