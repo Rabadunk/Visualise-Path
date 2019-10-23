@@ -194,7 +194,7 @@ function getMap() {
                 newRow = [];
             }
 
-        } else if (num == 1 || num == 0) {
+        } else if (num == 1 || num == 0 || num == 2) {
 
             newRow.push(num);
         }
@@ -202,6 +202,8 @@ function getMap() {
     }
 
     newMaze.push(newRow);
+
+    console.log(inputMazeScramble);
 
     maze = newMaze;
     makeMaze();
@@ -213,11 +215,12 @@ function getMap() {
 function displayMap() {
 
     var mapString = "{";
+    console.log(maze);
 
     for (var y = 0; y < maze.length; y++) {
         mapString+="{";
         for (var x = 0; x < maze[0].length; x++) {
-
+            console.log(maze[y][x]);
             mapString += maze[y][x].toString();
 
             if (x != maze[0].length - 1) {
