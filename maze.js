@@ -6,22 +6,21 @@ var startx = 1;
 var starty = 1;
 
 var maze = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 1, 2, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 1],
-    [1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 2, 1, 2, 0, 2, 1, 2, 0, 2, 1, 0, 1],
-    [1, 0, 1, 0, 1, 2, 0, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
-    [1, 2, 0, 2, 0, 2, 1, 2, 0, 2, 1, 0, 1, 2, 0, 0, 0, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-    [1, 2, 0, 2, 0, 2, 0, 2, 1, 2, 1, 0, 1, 0, 1, 2, 0, 2, 1],
-    [1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1],
-    [1, 2, 0, 2, 1, 0, 1, 2, 0, 2, 1, 2, 0, 2, 1, 2, 0, 2, 1],
-    [1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
-    [1, 2, 0, 0, 0, 2, 0, 2, 1, 2, 0, 2, 0, 2, 1, 2, 0, 2, 1],
-    [1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1],
-    [1, 2, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 2, 0, 2, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-];
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1],
+    [1,1,1,1,1,0,1,0,1,0,1,0,1,1,1,1,1,0,1],
+    [1,0,0,0,1,0,1,0,0,0,1,0,0,0,0,0,1,0,1],
+    [1,0,1,0,1,0,1,0,1,1,1,1,1,1,1,0,1,0,1],
+    [1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1],
+    [1,0,1,1,1,1,1,1,1,1,1,0,1,0,1,0,1,1,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1],
+    [1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,0,1],
+    [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,1],
+    [1,0,1,1,1,1,1,0,1,1,1,0,1,0,1,0,1,0,1],
+    [1,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
+    [1,0,1,1,1,0,1,1,1,0,1,1,1,0,1,1,1,0,1],
+    [1,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1],
+    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]];
 
 var cellArray = [];
 
@@ -49,39 +48,47 @@ class Cell {
 function allocatedMaze() {
     for (var y = 1; y < maze.length - 1; y++) {
         for (var x = 1; x < maze[0].length - 1; x++) {
-            
-            var left = 0;
-            var right = 0;
-            var up = 0;
-            var down = 0;
-            var sum = 0;
-    
-            if(maze[y + 1][x] == 0 || maze[y + 1][x] == 2)
-            {
-                up = 1;
-                sum++;
-            }
 
-            if(maze[y-1][x] == 0 || maze[y-1][x] == 2)
-            {
-                down = 1;
-                sum++;
-            }
+            if (maze[y][x] == 0) {
 
-            if(maze[y][x + 1] == 0 || maze[y][x + 1] == 2) 
-            {
-                right = 1;
-                sum++;
-            }
+                var left = 0;
+                var right = 0;
+                var up = 0;
+                var down = 0;
+                var sum = 0;
 
-            if(maze[y][x - 1] == 0 || maze[y][x - 1] == 2)
-            {
-                left = 1;
-                sum++;
-            }
+                if (maze[y + 1][x] != 1) {
+                    up = 1;
+                    sum++;
+                }
 
-            if(sum > 2 && maze[y][x] == 2) {
-                maze[y][x] = mazeFeature.DEADEND;
+                if (maze[y - 1][x] != 1) {
+                    down = 1;
+                    sum++;
+                }
+
+                if (maze[y][x + 1] != 1) {
+                    right = 1;
+                    sum++;
+                }
+
+                if (maze[y][x - 1] != 1) {
+                    left = 1;
+                    sum++;
+                }
+
+                if (sum == 2 && !(left && right || up && down)) {
+                    maze[y][x] = mazeFeature.INTERSECTION;
+                }
+
+                if (sum == 1) {
+                    maze[y][x] = mazeFeature.INTERSECTION;
+                }
+
+                if (sum > 2) {
+                    maze[y][x] = mazeFeature.INTERSECTION;
+                }
+
             }
     
         }
@@ -93,7 +100,7 @@ function makeMaze() {
 
     allocatedMaze();
 
-    console.log('{')
+    cellArray = [];
 
     for (var y = 0; y < maze.length; y++) {
         console.log('{')
@@ -115,17 +122,15 @@ function makeMaze() {
                 var cell = new Cell(x, y, "black");
             }
 
-            console.log(maze[y][x]);
-
             
 
             cellArray.push(cell);
     
         }
-
-        console.log('}, \n')
     
     }
+
+    displayMap();
 
 }
 
@@ -141,6 +146,7 @@ function draw() {
 
 
 function getPath() {
+    path = [];
     var pathInput = document.getElementById("form");
     var pathString = pathInput[0].value;
     var pathIndices = pathString.split(",");
@@ -148,6 +154,13 @@ function getPath() {
     for(var g = 0; g < pathIndices.length; g++) {
         path.push(pathIndices[g].split(" "));
     }
+
+    path.forEach(coord => {
+
+        console.log(coord);
+
+    });
+
     console.log(path);
 }
 
@@ -159,10 +172,73 @@ function getDirections() {
 }
 
 function getMap() {
-    var pathInput = document.getElementById("form3");
-    path = pathInput[0].value.split(" ");
+    var mazeInput = document.getElementById("form3");
+    var inputMazeScramble = mazeInput[0].value;
+    console.log(inputMazeScramble);
 
-    console.log(path);
+    var newMaze = [];
+    var newRow = [];
+
+
+    for (var i = 0; i < inputMazeScramble.length; i++) {
+
+        var character = inputMazeScramble.charAt(i);
+        var num = parseInt(character);
+
+
+        if (character == "{") {
+
+
+            if (newRow.length != 0) {
+                newMaze.push(newRow)
+                newRow = [];
+            }
+
+        } else if (num == 1 || num == 0) {
+
+            newRow.push(num);
+        }
+
+    }
+
+    newMaze.push(newRow);
+
+    maze = newMaze;
+    makeMaze();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw();
+}
+
+function displayMap() {
+
+    var mapString = "{";
+
+    for (var y = 0; y < maze.length; y++) {
+        mapString+="{";
+        for (var x = 0; x < maze[0].length; x++) {
+
+            mapString += maze[y][x].toString();
+
+            if (x != maze[0].length - 1) {
+                mapString += ",";
+            }
+
+        }
+
+        mapString += "}";
+
+        if (y != maze.length - 1) {
+            mapString += ",";
+        }
+
+    }
+
+    mapString += "};";
+
+    console.log(mapString);
+    document.getElementById("map").innerHTML = mapString;
+
 }
 
 function nextMove() {
@@ -183,6 +259,8 @@ function nextMove() {
                 cell.color = "yellow";
             }
             pathIndex++;
+
+            console.log("This is x: %d, this is y: %d", cell.col, cell.row);
         }
     });
 
