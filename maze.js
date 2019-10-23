@@ -120,9 +120,7 @@ function makeMaze() {
                 var cell = new Cell(x, y, "grey");
             } else if(maze[y][x] == mazeFeature.DEADEND) {
                 var cell = new Cell(x, y, "black");
-            }
-
-            
+            }   
 
             cellArray.push(cell);
     
@@ -147,6 +145,7 @@ function draw() {
 
 function getPath() {
     path = [];
+    pathIndex = 0;
     var pathInput = document.getElementById("form");
     var pathString = pathInput[0].value;
     var pathIndices = pathString.split(",");
@@ -155,11 +154,12 @@ function getPath() {
         path.push(pathIndices[g].split(" "));
     }
 
-    path.forEach(coord => {
+    makeMaze();
 
-        console.log(coord);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw();
 
-    });
+
 
     console.log(path);
 }
@@ -268,52 +268,6 @@ function nextMove() {
     
 }
 
-function nextDirection() {
-
-    var direction = path[pathIndex]
-
-
-    if(direction == "0") {
-        starty--;
-    }
-
-    if(direction == "1") {
-        starty++;
-    }
-
-    if(direction == "2") {
-        startx--;
-    }
-
-    if(direction == "3") {
-        startx++;
-    }
-
-    console.log(pathIndex, direction, startx, starty);
-
-
-    if(direction != "5") {
-        cellArray.forEach(cell => {
-            if(cell.row == startx && cell.col == starty) {
-    
-                if(cell.color == "yellow") {
-                    cell.color = "purple";
-                } else if(cell.color == "purple") {
-                    cell.color = "green";
-                } else {
-                    cell.color = "yellow";
-                }
-            }
-    
-        });
-    }
-
-    pathIndex++;
-        
-
-    draw();
-    
-}
 
 function autoComplete() {
 
@@ -321,11 +275,6 @@ function autoComplete() {
 
 }
 
-function autoDirection() {
-
-    setInterval(nextDirection, 100);
-
-}
 
 makeMaze();
 
