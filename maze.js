@@ -282,3 +282,4 @@ function autoComplete() {
 makeMaze();
 
 draw();
+
