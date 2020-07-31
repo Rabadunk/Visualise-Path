@@ -100,6 +100,8 @@ function makeMaze() {
 
     allocatedMaze();
 
+    cellArray = [];
+
     for (var y = 0; y < maze.length; y++) {
         console.log('{')
         for (var x = 0; x < maze[0].length; x++) {
@@ -118,15 +120,15 @@ function makeMaze() {
                 var cell = new Cell(x, y, "grey");
             } else if(maze[y][x] == mazeFeature.DEADEND) {
                 var cell = new Cell(x, y, "black");
-            }
-
-            
+            }   
 
             cellArray.push(cell);
     
         }
     
     }
+
+    displayMap();
 
 }
 
@@ -138,12 +140,12 @@ function draw() {
         cellArray[i].show();
     }
 
-    displayMap();
-
 }
 
 
 function getPath() {
+    path = [];
+    pathIndex = 0;
     var pathInput = document.getElementById("form");
     var pathString = pathInput[0].value;
     var pathIndices = pathString.split(",");
@@ -151,6 +153,14 @@ function getPath() {
     for(var g = 0; g < pathIndices.length; g++) {
         path.push(pathIndices[g].split(" "));
     }
+
+    makeMaze();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    draw();
+
+
+
     console.log(path);
 }
 
@@ -184,7 +194,7 @@ function getMap() {
                 newRow = [];
             }
 
-        } else if (num == 1 || num == 0) {
+        } else if (num == 1 || num == 0 || num == 2) {
 
             newRow.push(num);
         }
@@ -192,6 +202,8 @@ function getMap() {
     }
 
     newMaze.push(newRow);
+
+    console.log(inputMazeScramble);
 
     maze = newMaze;
     makeMaze();
@@ -203,11 +215,12 @@ function getMap() {
 function displayMap() {
 
     var mapString = "{";
+    console.log(maze);
 
     for (var y = 0; y < maze.length; y++) {
         mapString+="{";
         for (var x = 0; x < maze[0].length; x++) {
-
+            console.log(maze[y][x]);
             mapString += maze[y][x].toString();
 
             if (x != maze[0].length - 1) {
@@ -224,7 +237,7 @@ function displayMap() {
 
     }
 
-    mapString += "}";
+    mapString += "};";
 
     console.log(mapString);
     document.getElementById("map").innerHTML = mapString;
@@ -249,6 +262,8 @@ function nextMove() {
                 cell.color = "yellow";
             }
             pathIndex++;
+
+            console.log("This is x: %d, this is y: %d", cell.col, cell.row);
         }
     });
 
@@ -256,52 +271,6 @@ function nextMove() {
     
 }
 
-function nextDirection() {
-
-    var direction = path[pathIndex]
-
-
-    if(direction == "0") {
-        starty--;
-    }
-
-    if(direction == "1") {
-        starty++;
-    }
-
-    if(direction == "2") {
-        startx--;
-    }
-
-    if(direction == "3") {
-        startx++;
-    }
-
-    console.log(pathIndex, direction, startx, starty);
-
-
-    if(direction != "5") {
-        cellArray.forEach(cell => {
-            if(cell.row == startx && cell.col == starty) {
-    
-                if(cell.color == "yellow") {
-                    cell.color = "purple";
-                } else if(cell.color == "purple") {
-                    cell.color = "green";
-                } else {
-                    cell.color = "yellow";
-                }
-            }
-    
-        });
-    }
-
-    pathIndex++;
-        
-
-    draw();
-    
-}
 
 function autoComplete() {
 
@@ -309,11 +278,6 @@ function autoComplete() {
 
 }
 
-function autoDirection() {
-
-    setInterval(nextDirection, 100);
-
-}
 
 makeMaze();
 
